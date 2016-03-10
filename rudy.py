@@ -53,4 +53,4 @@ if __name__ == "__main__":
     parser.add_argument('-n', '--thread', metavar='count', default=512, help='Amount of clients that are going to contact the server.')
     args = parser.parse_args()
 
-    rudy_attack(args.server, args.port, args.length, args.time, args.thread)
+    rudy_attack(args.server, int(args.port), int(args.length), int(args.time), int(args.thread))
